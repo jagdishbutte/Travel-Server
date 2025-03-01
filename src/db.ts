@@ -1,17 +1,21 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/travelai";
+dotenv.config();
+
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error("Error: MONGO_URI is not defined in .env file");
+  process.exit(1);
+}
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as ConnectOptions);
-
-    console.log("MongoDB connected...");
-  } catch (err: any) {
-    console.error(err.message);
+    await mongoose.connect(MONGO_URI);
+    console.log("✅ MongoDB connected...");
+  } catch (error) {
+    console.error("❌ MongoDB connection failed:", error);
     process.exit(1);
   }
 };
