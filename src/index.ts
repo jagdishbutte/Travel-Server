@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./db";
 import userRouter from "./routes/userRouter";
 import preferenceRouter from "./routes/preferencesRouter";
+import genAIRouter from "./routes/genAIRouter";
 
 dotenv.config(); // Load .env variables
 
@@ -19,6 +20,7 @@ connectDB();
 
 // Routes
 app.use("/users", userRouter, preferenceRouter);
+app.use("/plan", genAIRouter);
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
